@@ -20,11 +20,35 @@ namespace AnalyticHierarchyProcess.Classes
                 return anchorInstance;
             }
         }
-        public int NumberOfAlternatives { get; }
-        public List<string> AlternativesNames { get; }
-        public List<int> WeightCriteria { get; }
-
+        public List<Criterion> Criteria {  get; private set; }
+        
+        //Singleton costructor
         private AHP() { }
+
+        public void prepareDataStructure(List<string> namesOfCriteria, List<string> namesOfAlternatives)
+        {
+            Criteria = new List<Criterion>();
+            foreach (var criterionName in namesOfCriteria)
+            {
+                Criteria.Add(new Criterion(criterionName));
+                foreach (var alternativeName in namesOfAlternatives)
+                {
+                    Criteria.Last().ValuesOfAlternatives.Add(new Alternative(alternativeName));
+                }
+            }
+        }
+        public void ComputeWeightOfCriteria(int[][] Values)
+        {
+            double weight = 0;
+            //compute weights...
+            
+            //setting weigts for criteria
+            foreach (var criterion in Criteria)
+            {
+                criterion.Weight = weight;
+            }
+        }
+
 
     }
 }

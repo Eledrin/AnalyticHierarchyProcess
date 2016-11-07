@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace AnalyticHierarchyProcess.Classes
 {
-    public class Criterion
+    public class Alternative
     {
         public string Name { get; }
-        public double Weight { get; set; }
-        public List<Alternative> ValuesOfAlternatives { get; }
-        public Criterion(string name)
+        public double Value { get; set; }
+
+        public Alternative(string name)
         {
             Name = name;
-            ValuesOfAlternatives = new List<Alternative>();
         }
-
-       
     }
 }

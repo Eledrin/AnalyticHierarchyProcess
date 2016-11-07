@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AHP.cs" />
+    <Compile Include="Classes\Alternative.cs" />
     <Compile Include="Classes\Criterion.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
