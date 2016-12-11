@@ -45,7 +45,7 @@ namespace AnalyticHierarchyProcess.Classes
             //setting weigts for criteria
             foreach (var criterion in Criteria)
             {
-                criterion.Weight = weight;
+                criterion.Value = weight;
             }
         }
 
