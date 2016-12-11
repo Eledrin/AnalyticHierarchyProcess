@@ -23,7 +23,7 @@ namespace AnalyticHierarchyProcess.Classes
 
         public void SetAlternativesPairwiseValues(double[][] Matrix)
         {
-
+            //ToDo
         }
 
     }

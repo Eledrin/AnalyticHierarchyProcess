@@ -72,13 +72,13 @@ namespace AnalyticHierarchyProcess.Classes
                         item.Coeff *= element; 
                     }
                 }
-                item.Coeff = Math.Pow(item.Coeff, 1.0 / (double)item.PairwiseValues.Length);
+                item.Coeff = Math.Pow(item.Coeff, 1.0 / item.PairwiseValues.Length);
                 CoeffSum += item.Coeff;
             }
             double temp = 0.0;
             foreach (var item in Criteria)
             {
-                item.Coeff = (item.Coeff / CoeffSum) * (double)item.PairwiseValues.Length;
+                item.Coeff = (item.Coeff / CoeffSum) * item.PairwiseValues.Length;
                 item.Coeff = Math.Round(item.Coeff, 4);
                 temp += item.Coeff;
             }
