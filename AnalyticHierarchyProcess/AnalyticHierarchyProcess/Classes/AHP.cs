@@ -20,12 +20,12 @@ namespace AnalyticHierarchyProcess.Classes
                 return anchorInstance;
             }
         }
-        public List<Criterion> Criteria {  get; private set; }
-        
+        public List<Criterion> Criteria { get; private set; }
+
         //Singleton costructor
         private AHP() { }
 
-        public void prepareDataStructure(List<string> namesOfCriteria, List<string> namesOfAlternatives)
+        public void PrepareDataStructure(List<string> namesOfCriteria, List<string> namesOfAlternatives)
         {
             Criteria = new List<Criterion>();
             foreach (var criterionName in namesOfCriteria)
@@ -37,16 +37,52 @@ namespace AnalyticHierarchyProcess.Classes
                 }
             }
         }
-        public void ComputeWeightOfCriteria(int[][] Values)
+
+        private bool checkCriteriaCoeffs()
         {
-            double weight = 0;
-            //compute weights...
-            
-            //setting weigts for criteria
-            foreach (var criterion in Criteria)
+            double CoeffSum = 0.0;
+            foreach (var item in Criteria)
             {
-                criterion.Value = weight;
+                CoeffSum += item.Coeff;
             }
+            return (Criteria.Count - CoeffSum < 0.1 && Criteria.Count - CoeffSum > -0.1);
+        }
+
+        public void SetCriteriaPairwiseValues(double[][] Matrix)
+        {
+            for (int i = 0; i < Matrix.Length; i++)
+            {
+                Criteria[i].PairwiseValues = Matrix[i];
+            }
+        }
+
+        public void ComputeCriteriaCoeffs()
+        {
+            double CoeffSum = 0.0;
+            foreach (var item in Criteria)
+            {
+                foreach(var element in item.PairwiseValues)
+                {
+                    if (item.Coeff == 0.0)
+                    {
+                        item.Coeff = element;
+                    }
+                    else
+                    {
+                        item.Coeff *= element; 
+                    }
+                }
+                item.Coeff = Math.Pow(item.Coeff, 1.0 / (double)item.PairwiseValues.Length);
+                CoeffSum += item.Coeff;
+            }
+            double temp = 0.0;
+            foreach (var item in Criteria)
+            {
+                item.Coeff = (item.Coeff / CoeffSum) * (double)item.PairwiseValues.Length;
+                item.Coeff = Math.Round(item.Coeff, 4);
+                temp += item.Coeff;
+            }
+            //Console.WriteLine(checkCriteriaCoeffs());
         }
 
 
