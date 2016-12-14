@@ -9,14 +9,14 @@ namespace AnalyticHierarchyProcess.Classes
     public class Alternative
     {
         public string Name { get; }
-        public double? Value { get; set; }
-        public double? Coeff { get; set; }
+        public double [] PairwiseValues { get; set; }
+        public double Coeff { get; set; }
 
         public Alternative(string name)
         {
             Name = name;
-            Value = null;
-            Coeff = null;
+            PairwiseValues = null;
+            Coeff = 0.0;
         }
     }
 }

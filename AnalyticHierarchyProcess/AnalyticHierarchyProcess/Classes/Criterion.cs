@@ -23,8 +23,36 @@ namespace AnalyticHierarchyProcess.Classes
 
         public void SetAlternativesPairwiseValues(double[][] Matrix)
         {
-            //ToDo
+            for (int i = 0; i < ValuesOfAlternatives.Count; i++)
+            {
+                ValuesOfAlternatives[i].PairwiseValues = Matrix[i];
+            }
         }
 
+        public void ComputeAlternativesCoeffs()
+        {
+            double CoeffSum = 0.0;
+            foreach (var item in ValuesOfAlternatives)
+            {
+                foreach (var element in item.PairwiseValues)
+                {
+                    if (item.Coeff == 0.0)
+                    {
+                        item.Coeff = element;
+                    }
+                    else
+                    {
+                        item.Coeff *= element;
+                    }
+                }
+                item.Coeff = Math.Pow(item.Coeff, 1.0 / item.PairwiseValues.Length);
+                CoeffSum += item.Coeff;
+            }
+            foreach (var item in ValuesOfAlternatives)
+            {
+                item.Coeff = (item.Coeff / CoeffSum) * item.PairwiseValues.Length;
+                item.Coeff = Math.Round(item.Coeff, 4);
+            }
+        }
     }
 }

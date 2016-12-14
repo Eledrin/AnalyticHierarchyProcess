@@ -35,9 +35,39 @@ namespace AnalyticHierarchyProcess
                 new double[] { 1.0 / 3.0, 1.0 / 9.0 , 1.0 / 5.0, 1, 1.0/7.0 },
                 new double[] { 5, 1.0 / 3.0, 3, 7, 1 }
             };
+            double[][] k1 = new double[][] {
+                new double[] {1.0, 1.0 / 3.0, 1.0 / 5.0},
+                new double[] {1.0, 1.0 / 3.0, 1.0 / 5.0 },
+                new double[] {5.0, 3.0, 1.0}
+            };
+            double[][] k2 = new double[][] {
+                new double[] {1.0, 1.0 / 3.0, 3.0},
+                new double[] {3.0, 1.0, 5.0 },
+                new double[] {1.0 / 3.0, 1.0 / 5.0, 1.0}
+            };
+            double[][] k3 = new double[][] {
+                new double[] {1.0, 1.0 / 3.0, 3.0},
+                new double[] {3.0, 1.0, 7.0 },
+                new double[] {1.0 / 3.0, 1.0 / 7.0, 1.0}
+            };
+            double[][] k4 = new double[][] {
+                new double[] {1.0, 1.0 / 7.0, 1.0 / 3.0},
+                new double[] {7.0, 1.0, 5.0 },
+                new double[] {3.0, 1.0 / 5.0, 1.0}
+            };
+            double[][] k5 = new double[][] {
+                new double[] {1.0, 3.0, 1.0 / 5.0},
+                new double[] {1.0 / 3.0, 1.0, 1.0 / 7.0 },
+                new double[] {5.0, 7.0, 1.0}
+            };
             try
             {
                 ValidateValues.Check(CriteriaMatrixOfPairwiseComparison);
+                ValidateValues.Check(k1);
+                ValidateValues.Check(k2);
+                ValidateValues.Check(k3);
+                ValidateValues.Check(k4);
+                ValidateValues.Check(k5);
             }
             catch (Exception e)
             {
@@ -47,9 +77,14 @@ namespace AnalyticHierarchyProcess
             finally
             {
                 myAHP.SetCriteriaPairwiseValues(CriteriaMatrixOfPairwiseComparison);
-                myAHP.ComputeCriteriaCoeffs();
-                textBox1.Text = myAHP.Criteria[0].Coeff.ToString();
-                textBox2.Text = myAHP.Criteria[0].PairwiseValues[1].ToString();
+                myAHP.Criteria[0].SetAlternativesPairwiseValues(k1);
+                myAHP.Criteria[1].SetAlternativesPairwiseValues(k2);
+                myAHP.Criteria[2].SetAlternativesPairwiseValues(k3);
+                myAHP.Criteria[3].SetAlternativesPairwiseValues(k4);
+                myAHP.Criteria[4].SetAlternativesPairwiseValues(k5);
+                myAHP.ComputeEvaluationOfAlternatives();
+                textBox1.Text = myAHP.GetNameOfBestAlternative();
+                textBox2.Text = myAHP.GetEvaluationOfBestAlternative().ToString();
             }
         }
     }
